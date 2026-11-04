@@ -1,0 +1,12 @@
+{
+  "addons": {
+    "proxmox-terminal-select@maxbernede.github.io": {
+      "updates": [
+        {
+          "version": "1.2.3",
+          "update_link": "https://github.com/MaxBernede/proxmox-terminal-select/releases/download/v1.2.3/proxmox-terminal-select.xpi"
+        }
+      ]
+    }
+  }
+}
