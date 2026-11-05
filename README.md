@@ -2,8 +2,7 @@
 
 **Select and copy text in the Proxmox web terminal, even when an app like Claude Code, htop or vim captures the mouse.**
 
-[![Firefox Add-ons](https://img.shields.io/badge/Firefox%20Add--ons-Install-2ea44f?style=for-the-badge&logo=firefoxbrowser)](https://addons.mozilla.org/firefox/addon/proxmox-terminal-select/)
-[![Signed .xpi](https://img.shields.io/badge/or-signed%20.xpi-555?style=for-the-badge)](https://github.com/MaxBernede/proxmox-terminal-select/releases/latest/download/proxmox-terminal-select.xpi)
+[![Install (signed .xpi)](https://img.shields.io/badge/Install-signed%20.xpi-2ea44f?style=for-the-badge&logo=firefoxbrowser)](https://github.com/MaxBernede/proxmox-terminal-select/releases/latest/download/proxmox-terminal-select.xpi)
 [![Userscript](https://img.shields.io/badge/or-userscript-555?style=for-the-badge)](https://raw.githubusercontent.com/MaxBernede/proxmox-terminal-select/main/proxmox-terminal-select.user.js)
 
 ![Demo: click-drag in the Proxmox console selects the text, copies it, then it's pasted into Claude Code](docs/demo.gif)
@@ -34,9 +33,9 @@ This extension gives you normal text selection back in the Proxmox xterm.js cons
 
 ## Install
 
-**Zen / Firefox** — install from **[Firefox Add-ons](https://addons.mozilla.org/firefox/addon/proxmox-terminal-select/)**
-(or click the signed **[proxmox-terminal-select.xpi](https://github.com/MaxBernede/proxmox-terminal-select/releases/latest/download/proxmox-terminal-select.xpi)** ▸ **Add**).
-It stays installed across restarts and updates automatically.
+**Zen / Firefox** — click **[proxmox-terminal-select.xpi](https://github.com/MaxBernede/proxmox-terminal-select/releases/latest/download/proxmox-terminal-select.xpi)** ▸ **Add**
+(or download it, then `about:addons` ▸ ⚙ ▸ **Install Add-on From File…**).
+The extension is signed by Mozilla, so it stays installed across restarts and updates automatically from this repo (`updates.json`).
 
 **Chrome / Edge / Brave** — download **[proxmox-terminal-select.zip](https://github.com/MaxBernede/proxmox-terminal-select/releases/latest/download/proxmox-terminal-select.zip)**,
 extract it, then `chrome://extensions` ▸ enable **Developer mode** ▸ **Load unpacked** ▸ pick the folder.
@@ -61,8 +60,10 @@ On pages without an xterm.js terminal the script does nothing and stops.
 The source is `content.js`. `./build.ps1` generates `proxmox-terminal-select.user.js` (committed),
 plus the unsigned `.xpi` and the `.zip` (Chrome).
 
-For a new Zen/Firefox version: bump `version` in `manifest.json`, run `./build.ps1`, upload the `.xpi`
-to addons.mozilla.org (listed channel), then attach the signed `.xpi` to a GitHub release.
+For a new Zen/Firefox version: bump `version` in `manifest.json`, run `./build.ps1`, then sign it with
+`npx web-ext sign --channel=unlisted --source-dir <folder with manifest.json + content.js>`
+(AMO API keys in `WEB_EXT_API_KEY` / `WEB_EXT_API_SECRET`). Attach the signed `.xpi` to a GitHub release
+as `proxmox-terminal-select.xpi` and add the version to `updates.json`.
 
 ## License
 
