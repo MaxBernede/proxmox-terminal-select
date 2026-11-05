@@ -1,67 +1,68 @@
 ﻿# ✂ Proxmox Terminal Select
 
-Extension (and userscript) for **Zen Browser / Firefox / Chrome**: easily select and copy text in the
-**Proxmox xterm.js terminal**, even when an app grabs the mouse (Claude Code, htop, vim, mc…).
+**Select and copy text in the Proxmox web terminal, even when an app like Claude Code, htop or vim captures the mouse.**
 
-[![Install (signed .xpi)](https://img.shields.io/badge/Install-signed%20.xpi-2ea44f?style=for-the-badge&logo=firefoxbrowser)](https://github.com/MaxBernede/proxmox-terminal-select/releases/latest/download/proxmox-terminal-select.xpi)
+[![Firefox Add-ons](https://img.shields.io/badge/Firefox%20Add--ons-Install-2ea44f?style=for-the-badge&logo=firefoxbrowser)](https://addons.mozilla.org/firefox/addon/proxmox-terminal-select/)
+[![Signed .xpi](https://img.shields.io/badge/or-signed%20.xpi-555?style=for-the-badge)](https://github.com/MaxBernede/proxmox-terminal-select/releases/latest/download/proxmox-terminal-select.xpi)
 [![Userscript](https://img.shields.io/badge/or-userscript-555?style=for-the-badge)](https://raw.githubusercontent.com/MaxBernede/proxmox-terminal-select/main/proxmox-terminal-select.user.js)
+
+![Demo: click-drag in the Proxmox console selects the text, copies it, then it's pasted into Claude Code](docs/demo.gif)
 
 ## The problem
 
-When you run Claude Code in the Proxmox web terminal, the app enables mouse tracking:
-click-dragging is sent to the app instead of selecting text, so you can't copy anything.
+When you run a terminal app such as **Claude Code**, htop, vim or mc in the Proxmox web console (xterm.js),
+the app turns on **mouse tracking**. From then on, every click and drag is sent to the app instead of
+selecting text, so you **can't select or copy anything** from the terminal. You end up retyping output by hand.
 
-## What it does
+## The fix
+
+This extension gives you normal text selection back in the Proxmox xterm.js console:
 
 | Action | Effect |
 |---|---|
-| **Click-drag** in the terminal | Selects text and **copies it automatically** ("Copied ✓" toast) |
+| **Click-drag** in the terminal | Selects text and **copies it to the clipboard automatically** ("Copied ✓" toast) |
 | Double-click / triple-click | Selects a word / a line |
-| **Alt+Shift+S** | Opens the whole terminal content (including scrollback) as plain, freely selectable text. Esc to close |
-| **Alt+Shift+F** or click the `✂ Select` badge | Toggles force select (OFF = the mouse goes back to the app as usual) |
+| **Alt+Shift+S** | Opens the whole terminal content (scrollback included) as plain, freely selectable text. Esc to close |
+| **Alt+Shift+F** or click the `✂ Select` badge (top-right) | Toggles the feature (OFF = the mouse goes back to the app) |
 
-> ⚠️ Works with the Proxmox **xterm.js** console (`>_ Console` ▸ `xterm.js`).
-> With noVNC the screen is an image, so there is no text to select.
+| 1. Click-drag to select | 2. Copied automatically | 3. Paste anywhere |
+|---|---|---|
+| ![Text selected in the terminal](docs/select.png) | !["Copied ✓" toast](docs/copied.png) | ![Text pasted into Claude Code](docs/pasted.png) |
 
-## Install — Zen / Firefox (signed, permanent)
+> ⚠️ Works with the Proxmox **xterm.js** console (`>_ Console` ▸ `xterm.js`, or the node `Shell`).
+> The noVNC console is an image, so there is no text to select there.
 
-1. Click **[proxmox-terminal-select.xpi](https://github.com/MaxBernede/proxmox-terminal-select/releases/latest/download/proxmox-terminal-select.xpi)**:
-   Zen/Firefox offers to **add the extension** ▸ **Add**.
-   (Otherwise: download the file, then `about:addons` ▸ ⚙ ▸ **Install Add-on From File…**)
-2. Reload the Proxmox console tab: the `✂ Select: ON` badge appears in the top-right corner.
+## Install
 
-The extension is signed by Mozilla (unlisted distribution): it stays installed across restarts
-and **updates automatically** from this repository (`updates.json`).
+**Zen / Firefox** — install from **[Firefox Add-ons](https://addons.mozilla.org/firefox/addon/proxmox-terminal-select/)**
+(or click the signed **[proxmox-terminal-select.xpi](https://github.com/MaxBernede/proxmox-terminal-select/releases/latest/download/proxmox-terminal-select.xpi)** ▸ **Add**).
+It stays installed across restarts and updates automatically.
 
-## Install — Chrome / Edge / Brave
+**Chrome / Edge / Brave** — download **[proxmox-terminal-select.zip](https://github.com/MaxBernede/proxmox-terminal-select/releases/latest/download/proxmox-terminal-select.zip)**,
+extract it, then `chrome://extensions` ▸ enable **Developer mode** ▸ **Load unpacked** ▸ pick the folder.
 
-1. Download **[proxmox-terminal-select.zip](https://github.com/MaxBernede/proxmox-terminal-select/releases/latest/download/proxmox-terminal-select.zip)** and extract it.
-2. `chrome://extensions` ▸ enable **Developer mode** ▸ **Load unpacked** ▸ pick the folder.
+**Userscript** — install **[Violentmonkey](https://addons.mozilla.org/firefox/addon/violentmonkey/)** (or Tampermonkey),
+then click **[proxmox-terminal-select.user.js](https://raw.githubusercontent.com/MaxBernede/proxmox-terminal-select/main/proxmox-terminal-select.user.js)** ▸ **Install**.
 
-## Alternative install — userscript
-
-1. Install **[Violentmonkey](https://addons.mozilla.org/firefox/addon/violentmonkey/)** (Tampermonkey works too).
-2. Click **[proxmox-terminal-select.user.js](https://raw.githubusercontent.com/MaxBernede/proxmox-terminal-select/main/proxmox-terminal-select.user.js)** ▸ **Install**.
+Then reload the Proxmox console tab: the `✂ Select: ON` badge appears in the top-right corner.
 
 ## How it works
 
-xterm.js allows text selection while **Shift** is held, even when the app captures the mouse.
-The script intercepts clicks in the terminal and re-sends them to xterm.js as if Shift were held.
-Hover and wheel events still go to the app.
+xterm.js lets you select text while **Shift** is held, even when an app captures the mouse.
+The extension intercepts mouse clicks inside the terminal and forwards them to xterm.js as if Shift were held.
+Hover and scroll events still go to the app, so it keeps working normally.
 Plain-text mode reads the xterm.js buffer directly (`term.buffer.active`).
 
-Nothing is sent anywhere: everything happens in the page. On other sites the script does nothing
-(it stops if it can't find an xterm.js terminal).
+**Privacy:** nothing is collected or sent anywhere, everything runs locally in the page.
+On pages without an xterm.js terminal the script does nothing and stops.
 
 ## Build & release
 
-The source is `content.js`. `./build.ps1` generates `proxmox-terminal-select.user.js` (committed)
-and the `.zip` (Chrome). For a new Zen/Firefox version:
+The source is `content.js`. `./build.ps1` generates `proxmox-terminal-select.user.js` (committed),
+plus the unsigned `.xpi` and the `.zip` (Chrome).
 
-1. Bump `version` in `manifest.json` and run `./build.ps1`.
-2. Sign (AMO API keys in `WEB_EXT_API_KEY` / `WEB_EXT_API_SECRET`) from a folder containing only `manifest.json` and `content.js`:
-   `npx web-ext sign --channel=unlisted --source-dir <folder>`
-3. Publish the signed `.xpi` as a release asset named `proxmox-terminal-select.xpi`, and add the version to `updates.json`.
+For a new Zen/Firefox version: bump `version` in `manifest.json`, run `./build.ps1`, upload the `.xpi`
+to addons.mozilla.org (listed channel), then attach the signed `.xpi` to a GitHub release.
 
 ## License
 

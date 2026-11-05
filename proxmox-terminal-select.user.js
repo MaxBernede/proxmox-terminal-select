@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Proxmox Terminal Select
 // @namespace    https://github.com/MaxBernede/proxmox-terminal-select
-// @version      1.2.3
+// @version      1.2.4
 // @description  Select & copy text in the Proxmox xterm.js terminal, even when an app grabs the mouse (Claude Code, htop, vim...)
 // @author       MaxBernede
 // @homepageURL  https://github.com/MaxBernede/proxmox-terminal-select

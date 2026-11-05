@@ -1,13 +1,12 @@
 {
   "manifest_version": 3,
   "name": "Proxmox Terminal Select",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Easily select and copy text in the Proxmox xterm.js terminal, even when an app grabs the mouse (e.g. Claude Code).",
   "browser_specific_settings": {
     "gecko": {
       "id": "proxmox-terminal-select@maxbernede.github.io",
       "strict_min_version": "128.0",
-      "update_url": "https://raw.githubusercontent.com/MaxBernede/proxmox-terminal-select/main/updates.json",
       "data_collection_permissions": { "required": ["none"] }
     }
   },
